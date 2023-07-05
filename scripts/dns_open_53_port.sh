@@ -5,6 +5,4 @@ DNSStubListener=no" > /etc/systemd/resolved.conf.d/adguardhome.conf
 mv /etc/resolv.conf /etc/resolv.conf.backup
 ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 systemctl reload-or-restart systemd-resolved
-cat docker-compose.yml > docker-compose-init.yml
-cat docker-compose53.yml > docker-compose.yml
 make d u

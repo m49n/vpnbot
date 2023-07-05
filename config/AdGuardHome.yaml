@@ -10,15 +10,17 @@ language: ""
 theme: auto
 debug_pprof: false
 web_session_ttl: 720
+statistics:
+  interval: 24h
+querylog:
+  enabled: true
+  file_enabled: true
+  interval: 2160h
+  size_memory: 1000
 dns:
   bind_hosts:
     - 0.0.0.0
   port: 53
-  statistics_interval: 1
-  querylog_enabled: true
-  querylog_file_enabled: true
-  querylog_interval: 2160h
-  querylog_size_memory: 1000
   anonymize_client_ip: false
   protection_enabled: true
   blocking_mode: default
@@ -59,7 +61,10 @@ dns:
   bogus_nxdomain: []
   aaaa_disabled: false
   enable_dnssec: false
-  edns_client_subnet: false
+  edns_client_subnet:
+    enabled: false
+    use_custom: false
+    custom_ip: ''
   max_goroutines: 300
   handle_ddr: true
   ipset: []
@@ -67,7 +72,14 @@ dns:
   filtering_enabled: true
   filters_update_interval: 24
   parental_enabled: false
-  safesearch_enabled: false
+  safe_search:
+    enabled: false
+    bing: true
+    duckduckgo: true
+    google: true
+    pixabay: true
+    yandex: true
+    youtube: true
   safebrowsing_enabled: false
   safebrowsing_cache_size: 1048576
   safesearch_cache_size: 1048576
@@ -95,8 +107,8 @@ tls:
   allow_unencrypted_doh: false
   certificate_chain: ""
   private_key: ""
-  certificate_path: ""
-  private_key_path: ""
+  certificate_path: /certs/cert_public
+  private_key_path: /certs/cert_private
   strict_sni_check: false
 filters:
   - enabled: true
@@ -134,7 +146,7 @@ clients:
     dhcp: true
     hosts: true
   persistent: []
-log_file: ""
+log_file: "/logs/adguard"
 log_max_backups: 0
 log_max_size: 100
 log_max_age: 3
@@ -145,4 +157,4 @@ os:
   group: ""
   user: ""
   rlimit_nofile: 0
-schema_version: 14
+schema_version: 20

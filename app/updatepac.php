@@ -1,7 +1,5 @@
 <?php
 
-ini_set('memory_limit', '256M');
-
 function elzw(string $str)
 {
     global $text, $load;
@@ -271,9 +269,11 @@ function start()
 function endScript($text)
 {
     global $bot;
-    update($text);
-    sleep(2);
-    $bot->menu('pac');
+    if (empty($_SERVER['argv'][5])) {
+        update($text);
+        sleep(2);
+        $bot->menu('pac');
+    }
     die();
 }
 
@@ -283,9 +283,12 @@ function download($index)
     file_put_contents($source[$index]['dest'], file_get_contents($source[$index]['source']));
 }
 
-require __DIR__ . '/debug.php';
+ini_set('memory_limit', '256M');
+require __DIR__ . '/timezone.php';
+// require __DIR__ . '/debug.php';
 require __DIR__ . '/bot.php';
 require __DIR__ . '/config.php';
+require __DIR__ . '/i18n.php';
 $source = [
     [
         'source' => 'https://raw.githubusercontent.com/zapret-info/z-i/master/nxdomain.txt',
@@ -308,7 +311,7 @@ $load = [
 
 switch ($_SERVER['argv'][1]) {
     case 'start':
-        $bot                       = new Bot($c['key']);
+        $bot                       = new Bot($c['key'], $i);
         $bot->input['chat']        = $_SERVER['argv'][2];
         $bot->input['message_id']  = $_SERVER['argv'][3];
         $bot->input['callback_id'] = $_SERVER['argv'][4];

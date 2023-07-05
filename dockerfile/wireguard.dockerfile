@@ -1,10 +1,4 @@
-from ubuntu:18.04
-run apt update && \
-apt install -y wireguard \
-iproute2 \
-net-tools \
-lsof \
-iptables \
-linux-headers-$(uname -r) \
-ssh && \
-mkdir /root/.ssh
+from alpine:3.18.2
+run apk add iproute2 linux-headers iptables xtables-addons wireguard-tools openssh \
+    && mkdir /root/.ssh
+env ENV="/root/.ashrc"
